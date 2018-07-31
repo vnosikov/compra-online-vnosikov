@@ -30,9 +30,9 @@ const updater = (
   priceUpdater = defaultPriceUpdater,
   sellInUpdater = defaultSellInUpdater
 ) => product => ({
-  price: priceUpdater(product.price, product.sellIn),
+  name: product.name,
   sellIn: sellInUpdater(product.sellIn),
-  name: product.name
+  price: priceUpdater(product.price, product.sellIn)
 });
 
 const defaultUpdater = updater();
