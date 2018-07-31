@@ -5,7 +5,6 @@ const CarInsurance = coTest.CarInsurance;
 const Product = coTest.Product;
 
 describe("Co Test", function() {
-
   it("should update default product", function() {
     const insurance = new CarInsurance([
       new Product('Default Coverage', 20, 25),
@@ -74,5 +73,12 @@ describe("Co Test", function() {
     expect(insurance.products[1].price).equal(16);
     expect(insurance.products[2].price).equal(0);
   });
+
+  it("should create empty car insurance if products were not specified", function() {
+    const insurance = new CarInsurance();
+    insurance.updatePrice();
+    expect(insurance.products.length).equal(0);
+  });
+
 
 });

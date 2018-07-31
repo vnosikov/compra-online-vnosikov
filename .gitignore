@@ -62,3 +62,4 @@ Thumbs.db
 
 # nyc output
 .nyc_output/
+coverage/
