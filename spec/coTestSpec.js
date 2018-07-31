@@ -6,30 +6,60 @@ const Product = coTest.Product;
 
 describe("Co Test", function() {
 
-  it("should foo", function() {
-    const productsAtDayZero = [
-      new Product('Medium Coverage', 10, 20),
-      new Product('Full Coverage', 2, 0),
-      new Product('Low Coverage', 5, 7),
-      new Product('Mega Coverage', 0, 80),
-      new Product('Mega Coverage', -1, 80),
-      new Product('Special Full Coverage', 15, 20),
-      new Product('Special Full Coverage', 10, 49),
-      new Product('Special Full Coverage', 5, 49),
-      new Product('Super Sale', 3, 6),
-    ];
+  it("should update default product", function() {
+    const insurance = new CarInsurance([
+      new Product('Default Coverage', 20, 25),
+      new Product('Medium Coverage', 0, 25),
+      new Product ('Low Coverage', 0, 0)
+    ]);
 
-    const carInsurance = new CarInsurance(productsAtDayZero);
-    const productPrinter = function (product) {
-      console.log(`${product.name}, ${product.sellIn}, ${product.price}`);
-    };
+    insurance.updatePrice();
+    expect(insurance.products[0].price).equal(24);
+    expect(insurance.products[1].price).equal(23);
+    expect(insurance.products[2].price).equal(0);
+  });
 
-    for (let i = 1; i <= 30; i += 1) {
-      console.log(`Day ${i}`);
-      console.log('name, sellIn, price');
-      carInsurance.updatePrice().forEach(productPrinter);
-      console.log('');
-    }
+  it("should update full coverage product", function() {
+    const insurance = new CarInsurance([
+      new Product('Full Coverage', 20, 25),
+      new Product('Full Coverage', 0, 5),
+      new Product ('Full Coverage', 0, 50)
+    ]);
+
+    insurance.updatePrice();
+    expect(insurance.products[0].price).equal(26);
+    expect(insurance.products[1].price).equal(7);
+    expect(insurance.products[2].price).equal(50);
+  });
+
+  it("should update mega coverage product", function() {
+    const insurance = new CarInsurance([
+      new Product('Mega Coverage', 20, 80),
+      new Product('Mega Coverage', 0, 0),
+    ]);
+
+    insurance.updatePrice();
+    expect(insurance.products[0].price).equal(80);
+    expect(insurance.products[1].price).equal(0);
+    expect(insurance.products[0].sellIn).equal(20);
+    expect(insurance.products[1].sellIn).equal(0);
+  });
+
+  it("should update special full coverage product", function() {
+    const insurance = new CarInsurance([
+      new Product('Special Full Coverage', 20, 20),
+      new Product('Special Full Coverage', 10, 20),
+      new Product ('Special Full Coverage', 5, 20),
+      new Product ('Special Full Coverage', 0, 20),
+      new Product ('Special Full Coverage', 8, 50)
+    ]);
+
+    insurance.updatePrice();
+    expect(insurance.products[0].price).equal(21);
+    expect(insurance.products[1].price).equal(22);
+    expect(insurance.products[2].price).equal(23);
+    expect(insurance.products[3].price).equal(0);
+    expect(insurance.products[4].price).equal(50);
   });
 
 });

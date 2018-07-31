@@ -26,8 +26,12 @@ const defaultPriceUpdater = (price, sellIn) =>
 const fullCoveragePriceUpdater = (price, sellIn) =>
   Math.min(50, sellIn >0 ? price + 1 : price + 2);
 
-//TODO: fixme
-const specialFullCoveragePriceUpdater = (price, sellIn) => price + 1
+const specialFullCoveragePriceUpdater = (price, sellIn) => {
+  if (sellIn > 10) return Math.min(50, price + 1);
+  else if (sellIn > 5) return Math.min(50, price + 2);
+  else if (sellIn > 0) return Math.min(50, price + 3);
+  else return 0;
+};
 
 const updater = (
   priceUpdater = defaultPriceUpdater,
@@ -44,12 +48,12 @@ const megaCoverageUpdater = updater(
   (price, sellIn) => price,
    sellIn => sellIn
  );
-const speicalFullCoverageUpdater = updater(specialFullCoveragePriceUpdater);
+const specialFullCoverageUpdater = updater(specialFullCoveragePriceUpdater);
 
 const updatersDictionary = {
   "Full Coverage": fullCoverageUpdater,
   "Mega Coverage": megaCoverageUpdater,
-  "Special Full Coverage": specialFullCoveragePriceUpdater
+  "Special Full Coverage": specialFullCoverageUpdater
 };
 
 const getUpdaterByName = name => updatersDictionary[name] || defaultUpdater;
